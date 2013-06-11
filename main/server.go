@@ -4,14 +4,16 @@ import (
 	"crypto/sha1"
 	"fmt"
 	"io/ioutil"
+	"log/syslog"
 	"mime"
 	"mime/multipart"
 	"net/http"
 	"os"
 	"path"
 	"strings"
-	"time"
 )
+
+var logger, _ = syslog.New(syslog.LOG_NOTICE, "go-gyazo-server")
 
 func main() {
 	http.HandleFunc("/", handler)
@@ -111,7 +113,6 @@ func Upload(w http.ResponseWriter, r *http.Request) {
 	if len(hi) == 2 && hi[1] == "80" {
 		host = hi[0]
 	}
-	time := time.Now().Format("2006/01/02/03 04:05")
-	fmt.Println(time + "	http://" + host + "/" + id + ".png")
+	logger.Notice("http://" + host + "/" + id + ".png")
 	w.Write([]byte("http://" + host + "/" + id + ".png"))
 }
