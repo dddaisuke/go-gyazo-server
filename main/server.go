@@ -112,6 +112,6 @@ func Upload(w http.ResponseWriter, r *http.Request) {
 		host = hi[0]
 	}
 	time := time.Now().Format("2006/01/02/03 04:05")
-	fmt.Printf(time + "	http://" + host + "/" + id + ".png")
+	fmt.Println(time + "	http://" + host + "/" + id + ".png")
 	w.Write([]byte("http://" + host + "/" + id + ".png"))
 }
